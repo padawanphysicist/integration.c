@@ -23,13 +23,13 @@
 #define __INTEGRATION_H_
 
 #include "num.h"
-#include "new.h"
+// #include "new.h"
 
-typedef struct
-{
-    num_t (*fn)();
-    void* params;
-} func_t;
+//typedef struct
+//{
+//    num_t (*fn)();
+//    void* params;
+//} func_t;
 
 void
 integrate (num_t res,

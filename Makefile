@@ -8,17 +8,18 @@ CFLAGS:= -std=c99 \
 all: test
 test:
 	@mkdir --parents build_aux
-	$(CC) $(DEV_CFLAGS) -I./module/log.c/src -DLOG_USE_COLOR -c ./module/log.c/src/log.c -o build_aux/log.o
-	$(CC) $(DEV_CFLAGS) -I./module/Unity/src -DUNITY_INCLUDE_DOUBLE -c ./module/Unity/src/unity.c -o build_aux/unity.o
-	$(CC) $(DEV_CFLAGS) -I./module/num.c/include -c ./module/num.c/src/new.c -o build_aux/new.o
-	$(CC) $(DEV_CFLAGS) -I./module/num.c/include -c ./module/num.c/src/num.c -o build_aux/num.o
-	$(CC) $(DEV_CFLAGS) -I./module/num.c/include -I./module/log.c/src -c $(DEV_INCDIR) -I./src/include -DM_PI=3.14159265359 -c ./src/qsimp.c -o build_aux/qsimp.o
-	$(CC) $(DEV_CFLAGS) -I./module/num.c/include -I./module/log.c/src -c $(DEV_INCDIR) -I./src/include -DM_PI=3.14159265359 -c ./src/integration.c -o build_aux/integration.o
+	$(CC) $(DEV_CFLAGS) -I./modules/log.c/src -DLOG_USE_COLOR -c ./modules/log.c/src/log.c -o build_aux/log.o
+	$(CC) $(DEV_CFLAGS) -I./modules/Unity/src -DUNITY_INCLUDE_DOUBLE -c ./modules/Unity/src/unity.c -o build_aux/unity.o
+	$(CC) $(DEV_CFLAGS) -I./modules/num.c/include -c ./modules/num.c/src/new.c -o build_aux/new.o
+	$(CC) $(DEV_CFLAGS) -I./modules/num.c/include -c ./modules/num.c/src/num.c -o build_aux/num.o
+	$(CC) $(DEV_CFLAGS) -I./modules/num.c/include -I./modules/log.c/src -c $(DEV_INCDIR) -I./src/include -DM_PI=3.14159265359 -c ./src/qsimp.c -o build_aux/qsimp.o
+	$(CC) $(DEV_CFLAGS) -I./modules/num.c/include -I./modules/log.c/src -c $(DEV_INCDIR) -I./src/include -DM_PI=3.14159265359 -c ./src/qtanhsinh.c -o build_aux/qtanhsin.o
+	$(CC) $(DEV_CFLAGS) -I./include -I./modules/num.c/include -I./modules/log.c/src -c $(DEV_INCDIR) -I./src/include -DM_PI=3.14159265359 -c ./src/integration.c -o build_aux/integration.o
 	$(CC) $(DEV_CFLAGS) $(DEV_INCDIR) \
-	-I./module/log.c/src \
-	-I./module/Unity/src  \
-	-I./module/num.c/include -I./module/log.c/src \
-	-I./src -I./test  \
+	-I./modules/log.c/src \
+	-I./modules/Unity/src  \
+	-I./modules/num.c/include \
+	-I./src -I./test -I./include  \
 	$(DEV_INCDIR) \
 	-DLOGLEVEL=$(LOGLEVEL) -DUNITY_INCLUDE_DOUBLE -c ./test/test.c -o build_aux/test.o
 	$(CC) $$(ls build_aux/*.o) -o test.out -lm -larb -lflint -lgsl -lgslcblas

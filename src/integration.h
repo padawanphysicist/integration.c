@@ -16,19 +16,20 @@
  */
 
 /** 
- * @file integration.c
- * @brief Implementation of the main routines.
+ * @file integration.h
+ * @brief Interface for the main routine.
  */
-#include <stdio.h>
-#include <math.h>
-#include <stdlib.h>
+#ifndef __INTEGRATION_H_
+#define __INTEGRATION_H_
 
-#include "integration.h"
-#include "qsimp.h"
-#include "qtanhsinh.h"
-#include "new.h"
 #include "num.h"
-#include "log.h"
+#include "new.h"
+
+typedef struct
+{
+    num_t (*fn)();
+    void* params;
+} func_t;
 
 void
 integrate (num_t res,
@@ -36,22 +37,6 @@ integrate (num_t res,
            const void *ctx,
            const num_t from,
            const num_t to,
-           const int method)
-{
-    switch (method) {
-    case 0:
-        // tanh-sinh quadrature
-        num_t tolerance, est_err, num_eval;
-        tolerance = new(num), est_err = new(num), num_eval = new(num);
-        num_set_d(tolerance, 1.0e-15);
-        tanhsinh_quad(res, f, ctx, from, to, tolerance, est_err, num_eval);
-        delete(tolerance), delete(est_err), delete(num_eval);
-        break;
-    default:
-        num_t n;
-        n = new(num);
-        num_set_d(n, 100.0);
-        integration_qsimp(res, f, ctx, from, to, n);
-        delete(n);
-    }
-}
+           const int method);
+
+#endif /* __INTEGRATION_H_ */

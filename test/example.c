@@ -1,15 +1,8 @@
-#include "unity.h"
-#include "num.h"
+#include <math.h>
+#include <stdlib.h>
+#include <stdio.h>
 #include "new.h"
-#include "integration.h"
-
-void
-fn1 (num_t res, const num_t x, const void* ctx)
-{
-    const double alpha = *(const double *)ctx;
-    num_pow_d(res, x, 2.0);
-    num_mul_d(res, res, alpha);
-}
+#include "integrate.h"
 
 void f (num_t res, const num_t x, const void *ctx)
 {
@@ -32,50 +25,25 @@ void f (num_t res, const num_t x, const void *ctx)
     delete(fac1), delete(fac2);
 }
 
+//double g(double x, const void *ctx)
+//{
+//    const double power = *(const double *)ctx;
+//    return pow(1. - x, power) * pow(x, -1. / 3.);
+//}
 
-
-void
-setUp (void)
-{
-    // set stuff up here
+void check(double exact, double result, double tolerance) {
+    if (!(fabs(exact - result) < tolerance)) {
+        fprintf(stderr, "error: result does not seem to match\n");
+        exit(EXIT_FAILURE);
+    }
 }
 
-void
-tearDown (void)
+int main(void)
 {
-    // clean stuff up here
-}
-
-void
-test_simple_integral (void)
-{
-    num_t from, to, res;
-
-    from = new(num), to = new(num), res = new(num);
-
-    num_zero(res);
-    num_zero(from);
-    num_set_d(to, 1.0);
-    
-    num_t n;
-    n = new(num);
-    num_set_d(n, 100.0);
-    
-    //struct param_t p = { .alpha = new(num, 3.0, 0.0) };
-    const double alpha = 3.0;
-
-    /* func_t f; */
-    /* f.fn = &fn1; */
-    /* f.params = &alpha; */
-    
-    integrate(res, &fn1, &alpha, from, to, -1 /*qsimp*/);
-    delete(from); delete(to); delete(n), delete(res);
-        
-    TEST_ASSERT_EQUAL_DOUBLE( 1.0, num_to_d(res) );
-}
-
-void test_tanhsinh (void)
-{
+    //static const double tolerance = 1e-6;
+    //double est_err, result;
+    //unsigned num_eval;
+	    //{
         static const double exact = 9.10823960732299650652;
 
         num_t from, to, tolerance, result, est_err, num_eval;
@@ -86,14 +54,13 @@ void test_tanhsinh (void)
 	num_set_d(from, 0.0), num_set_d(to, 10.0);
 	num_set_d(tolerance, 1.0e-6);
 
-    /* tanhsinh_quad(result, f, NULL, from, to, tolerance, est_err, num_eval); */
-    integrate(result, &f, NULL, from, to, 0 /*tanh-sinh*/);
+    tanhsinh_quad(result, f, NULL, from, to, tolerance, est_err, num_eval);
+
     printf("integral[0, 10] exp(-x/5) (2 + sin(2 x)):\n"
            "  exact:    %.17g\n"
            "  numeric:  %.17g +/- %.2g (%u evaluations)\n",
            exact, num_to_d(result), num_to_d(est_err), (int)num_to_d(num_eval));
-    //check(exact, num_to_d(result), num_to_d(tolerance));
-    TEST_ASSERT_EQUAL_DOUBLE( exact, num_to_d(result) );
+    check(exact, num_to_d(result), num_to_d(tolerance));
 
     delete(from), delete(to), delete(tolerance), delete(result), delete(est_err), delete(num_eval);
 
@@ -110,16 +77,5 @@ void test_tanhsinh (void)
     //           exact, result);
     //    check(exact, result, tolerance);
     //}
-    //return 0;
-}
-
-int
-main (void)
-{
-    UNITY_BEGIN();
-            
-    RUN_TEST(test_simple_integral);
-    RUN_TEST(test_tanhsinh);
-    
-    return UNITY_END();
+    return 0;
 }

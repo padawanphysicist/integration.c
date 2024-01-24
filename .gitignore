@@ -2,3 +2,4 @@
 *.x
 *.out
 doc/html
+valgrind-out.txt
