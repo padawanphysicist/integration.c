@@ -36,9 +36,17 @@ integrate (num_t res,
            const num_t from,
            const num_t to)
 {
-    num_t n;
-    n = new(num);
-    num_set_d(n, 100.0);
-    integration_qsimp(res, f, ctx, from, to, n);
-    delete(n);
+    const int method = -1;
+
+    switch (method) {
+    case 0:
+        // code block
+        break;
+    default:
+        num_t n;
+        n = new(num);
+        num_set_d(n, 100.0);
+        integration_qsimp(res, f, ctx, from, to, n);
+        delete(n);
+    }
 }
