@@ -598,7 +598,8 @@ integrate(num_t res,
         num_log(fac2, prev_delta);
         num_div(r, fac1, fac2);
 
-        if (num_to_d(r) > 1.9 && num_to_d(r) < 2.1)
+	num_abs(fac1, r);
+        if (num_to_d(fac1) > 1.9 && num_to_d(fac1) < 2.1)
             /* If convergence theory applied perfectly, r would be 2 in the
                convergence region.  r close to 2 is good enough. We expect the
                difference between this integral estimate and the next one to
