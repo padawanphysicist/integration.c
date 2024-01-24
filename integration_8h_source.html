@@ -125,10 +125,14 @@ $(document).ready(function(){initNavTree('integration_8h_source.html',''); initR
 <div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;    <span class="keywordtype">void</span>* params;</div>
 <div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;} <a class="code" href="structfunc__t.html">func_t</a>;</div>
 <div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160; </div>
-<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;num_t</div>
-<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;integrate (<a class="code" href="structfunc__t.html">func_t</a>* fun, <span class="keyword">const</span> num_t from, <span class="keyword">const</span> num_t to);</div>
-<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160; </div>
-<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;<span class="preprocessor">#endif </span><span class="comment">/* __INTEGRATION_H_ */</span><span class="preprocessor"></span></div>
+<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;<span class="keywordtype">void</span></div>
+<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;integrate (num_t res,</div>
+<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;           <span class="keywordtype">void</span> (*f)(num_t res, <span class="keyword">const</span> num_t x, <span class="keyword">const</span> <span class="keywordtype">void</span> *ctx), </div>
+<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;           <span class="keyword">const</span> <span class="keywordtype">void</span> *ctx,</div>
+<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;           <span class="keyword">const</span> num_t from,</div>
+<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;           <span class="keyword">const</span> num_t to);</div>
+<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160; </div>
+<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;<span class="preprocessor">#endif </span><span class="comment">/* __INTEGRATION_H_ */</span><span class="preprocessor"></span></div>
 <div class="ttc" id="astructfunc__t_html"><div class="ttname"><a href="structfunc__t.html">func_t</a></div><div class="ttdef"><b>Definition:</b> integration.h:29</div></div>
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->
