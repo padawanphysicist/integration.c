@@ -104,17 +104,18 @@ $(document).ready(function(){initNavTree('integration_8c.html',''); initResizabl
 <div class="textblock"><code>#include &lt;stdio.h&gt;</code><br />
 <code>#include &lt;math.h&gt;</code><br />
 <code>#include &lt;stdlib.h&gt;</code><br />
-<code>#include &quot;integration.h&quot;</code><br />
+<code>#include &quot;<a class="el" href="integration_8h_source.html">integration.h</a>&quot;</code><br />
 <code>#include &quot;qsimp.h&quot;</code><br />
+<code>#include &quot;qtanhsinh.h&quot;</code><br />
 <code>#include &quot;new.h&quot;</code><br />
 <code>#include &quot;num.h&quot;</code><br />
 <code>#include &quot;log.h&quot;</code><br />
 </div><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Functions</h2></td></tr>
-<tr class="memitem:ac166ea7caf64c5f9e333f5adb7887a4c"><td class="memItemLeft" align="right" valign="top"><a id="ac166ea7caf64c5f9e333f5adb7887a4c"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>integrate</b> (num_t res, void(*f)(num_t res, const num_t x, const void *ctx), const void *ctx, const num_t from, const num_t to)</td></tr>
-<tr class="separator:ac166ea7caf64c5f9e333f5adb7887a4c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3f993b3f97fe3a11880470303970e879"><td class="memItemLeft" align="right" valign="top"><a id="a3f993b3f97fe3a11880470303970e879"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>integrate</b> (num_t res, void(*f)(num_t res, const num_t x, const void *ctx), const void *ctx, const num_t from, const num_t to, const int method)</td></tr>
+<tr class="separator:a3f993b3f97fe3a11880470303970e879"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Implementation of the main routines. </p>
