@@ -1,11 +1,11 @@
 [submodule "Unity"]
-	path = module/Unity
+	path = modules/Unity
 	url = git@github.com:ThrowTheSwitch/Unity.git
 [submodule "logging"]
-	path = module/log.c
+	path = modules/log.c
 	url = git@github.com:rxi/log.c.git
 [submodule "numeric"]
-	path = module/num.c
+	path = modules/num.c
 	url = git@github.com:padawanphysicist/num.c.git
 [submodule "doc/doxygen-awesome-css"]
 	path = doc/doxygen-awesome-css
