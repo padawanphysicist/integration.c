@@ -3,14 +3,12 @@
 #include "new.h"
 #include "integration.h"
 
-struct param_t {
-    num_t alpha;
-} ;
-
-num_t fn1 (num_t x, void* params)
+void
+fn1 (num_t res, const num_t x, const void* ctx)
 {
-    struct param_t* p = (struct param_t *) params;
-    return num_mul(p->alpha, num_mul(x, x));
+    const double alpha = *(const double *)ctx;
+    num_pow_d(res, x, 2.0);
+    num_mul_d(res, res, alpha);
 }
 
 void
@@ -28,19 +26,29 @@ tearDown (void)
 void
 test_simple_integral (void)
 {
-    const num_t from = new(num, 0.0, 0.0);
-    const num_t   to = new(num, 1.0, 0.0);
-    const num_t    n = new(num, 100.0, 0.0);
-    struct param_t p = { .alpha = new(num, 3.0, 0.0) };
+    num_t from, to, res;
 
-    func_t f;
-    f.fn = &fn1;
-    f.params = &p;
+    from = new(num), to = new(num), res = new(num);
+
+    num_zero(res);
+    num_zero(from);
+    num_set_d(to, 1.0);
     
-    const double ret = num_to_double(integrate(&f, from, to));
-    delete(from); delete(to); delete(n);
+    num_t n;
+    n = new(num);
+    num_set_d(n, 100.0);
+    
+    //struct param_t p = { .alpha = new(num, 3.0, 0.0) };
+    const double alpha = 3.0;
+
+    /* func_t f; */
+    /* f.fn = &fn1; */
+    /* f.params = &alpha; */
+    
+    integrate(res, &fn1, &alpha, from, to);
+    delete(from); delete(to); delete(n), delete(res);
         
-    TEST_ASSERT_EQUAL_DOUBLE( 1.0, ret );    
+    TEST_ASSERT_EQUAL_DOUBLE( 1.0, num_to_d(res) );
 }
 
 int

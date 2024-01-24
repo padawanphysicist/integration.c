@@ -31,7 +31,11 @@ typedef struct
     void* params;
 } func_t;
 
-num_t
-integrate (func_t* fun, const num_t from, const num_t to);
+void
+integrate (num_t res,
+           void (*f)(num_t res, const num_t x, const void *ctx), 
+           const void *ctx,
+           const num_t from,
+           const num_t to);
 
 #endif /* __INTEGRATION_H_ */

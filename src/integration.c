@@ -24,57 +24,21 @@
 #include <stdlib.h>
 
 #include "integration.h"
+#include "qsimp.h"
 #include "new.h"
+#include "num.h"
 #include "log.h"
 
-static num_t
-int_simpson (const num_t from, const num_t to, const num_t n, func_t* fun);
-
-num_t
-integrate (func_t* fun, const num_t from, const num_t to)
+void
+integrate (num_t res,
+           void (*f)(num_t res, const num_t x, const void *ctx), 
+           const void *ctx,
+           const num_t from,
+           const num_t to)
 {
-    return int_simpson(from, to, new(num, 100.0, 0.0), fun);
+    num_t n;
+    n = new(num);
+    num_set_d(n, 100.0);
+    integration_qsimp(res, f, ctx, from, to, n);
+    delete(n);
 }
-
-#ifndef EVAL_FN
-#define EVAL_FN(foo,x) ((foo->fn)(x, (foo->params)))
-#endif
-static num_t
-int_simpson (const num_t from, const num_t to, const num_t n, func_t* fun)
-{
-    num_t h = num_div(num_sub(to, from), n);
-    num_t sum1 = new(num, 0.0, 0.0);
-    num_t sum2 = new(num, 0.0, 0.0);
-    const int N = (int) num_to_double(n);
-   
-    for (int i = 0; i < N; i++)
-    {
-        num_t arg = num_add(from,
-                      num_add(num_mul(h, new(num, (double) i, 0.0)),
-                              num_div(h, new(num, 2.0, 0.0))));
-        sum1 = num_add(sum1, EVAL_FN(fun, arg));
-        delete(arg);
-    }
-
-    for (int i = 1; i < N; i++)
-    {
-        num_t arg = num_add(from,
-                      num_mul(h, new(num, (double) i, 0.0)));
-        sum2 = num_add(sum2, EVAL_FN(fun, arg));
-        delete(arg);
-    }
-
-    num_t ret = num_mul(
-        num_div(h, new(num, 6.0, 0.0)),
-        num_add(EVAL_FN(fun, from),
-                num_add(EVAL_FN(fun, to),
-                        num_add(
-                            num_mul(sum1, new(num, 4.0, 0.0)),
-                            num_mul(sum2, new(num, 2.0, 0.0))))));
-    delete(h); delete(sum1); delete(sum2);
-
-    return ret;
-}
-#ifdef EVAL_FN
-#undef EVAL_FN
-#endif
